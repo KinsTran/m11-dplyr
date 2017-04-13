@@ -10,7 +10,7 @@ devtools::install_github("hadley/fueleconomy")
 library(fueleconomy)
 
 # You should have have access to the `vehicles` data.frame
-
+View(vehicles)
 
 # Create a data.frame of vehicles from 1997
 vehicles.from.1997 <- vehicles[vehicles$year==1997,]
@@ -19,15 +19,18 @@ vehicles.from.1997 <- vehicles[vehicles$year==1997,]
 unique(vehicles.from.1997$year)
 
 # Create a data.frame of 2-Wheel Drive vehicles that get more than 20 miles/gallon in the city
-
+two.wheel.twenty <- vehicles[vehicles$drive == "2-Wheel Drive" & vehicles$cty > 20,]
 
 # Of those vehicles, what is the vehicle ID of the vehicle with the worst hwy mpg?
-
+worst <- two.wheel.twenty$id[two.wheel.twenty$hwy == min(two.wheel.twenty$hwy)]
 
 # Write a function that takes a `year` and a `make` as parameters, and returns 
 # The vehicle that gets the most hwy miles/gallon of vehicles of that make in that year
+my.function <- function(year, make) {
+    filtered<- vehicles[vehicles$year == year & vehicles$make == make,]
+    return(filtered[filtered$hwy == max(filtered$hwy),])
+}
 
-
-# What was the most efficient honda model of 1995?
-
-
+# What was the most efficient honda model oßf 1995?
+my.function(1995, "Honda")
+ß
