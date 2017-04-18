@@ -25,13 +25,14 @@ new.flights <- mutate(flights, time_gained_air = arr_delay - dep_delay) %>% arra
 hist(new.flights$time_gained_air)
 
 # On average, did flights gain or lose time?
-# Lost time
+average1 = summarise(new.flights, mean = mean(time_gained_air))
 
 # Create a data.frame that is of flights headed to seatac ('SEA'), 
 flights.to.seatac <- filter(flights, dest == "SEA") %>% mutate(time_gained_air = arr_delay - dep_delay)
 
 # On average, did flights to seatac gain or loose time?
 hist(flights.to.seatac$time_gained_air)
+mean(flights.to.seatac$time_gained_air, na.rm = TRUE)
 #Lose time
 ### Bonus ###
 # Write a function that allows you to specify an origin, a destination, and a column of interest
@@ -45,6 +46,8 @@ NewFunction = function(set.origin, set.destination, column) {
 air.time <- NewFunction("JFK", "SEA", "air_time")
 
 # What was the average air time of those flights (in hours)?  
-
+mean(air.time$air_time, na.rm = TRUE) / 60
 
 # What was the min/max average air time for the JFK to SEA flights?
+min(air.time$air_time, na.rm = TRUE)
+max(air.time$air_time, na.rm = TRUE)
