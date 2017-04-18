@@ -8,9 +8,16 @@ install.packages('devtools')
 devtools::install_github("hadley/fueleconomy")
 
 # Require/library the fueleconomy package
+<<<<<<< HEAD
 library(fueleconomy)
 # Require/library dplyr
 library(dplyr)
+=======
+
+# Install (if you haven't already) and load the `dplyr`package
+
+
+>>>>>>> c229748c91f3961fc728d4b6585a0563a498d048
 # You should have have access to the `vehicles` data.frame
 View(vehicles)
 
