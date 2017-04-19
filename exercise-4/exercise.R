@@ -7,38 +7,47 @@ library(dplyr)
 
 # The data.frame flights should now be accessible to you.  View it, 
 # and get some basic information about the number of rows/columns
-
+View(flights)
+rows = nrow(flights)
+cols = ncol(flights)
 
 # Add a column that is the amount of time gained in the air (`arr_delay` - `dep_delay`)
-
+new.flights <- mutate(flights, time_gained_air = arr_delay - dep_delay)
+View(new.flights)
 
 # Sort your data.frame desceding by the column you just created
-
+new.flights <- arrange(new.flights, -time_gained_air)
 
 # Try doing the last 2 steps in a single operation using the pipe operator
-
+new.flights <- mutate(flights, time_gained_air = arr_delay - dep_delay) %>% arrange(-time_gained_air)
 
 # Make a histogram of the amount of gain using the `hist` command
-
+hist(new.flights$time_gained_air)
 
 # On average, did flights gain or lose time?
-
+average1 = summarise(new.flights, mean = mean(time_gained_air))
 
 # Create a data.frame that is of flights headed to seatac ('SEA'), 
-
+flights.to.seatac <- filter(flights, dest == "SEA") %>% mutate(time_gained_air = arr_delay - dep_delay)
 
 # On average, did flights to seatac gain or loose time?
-
+hist(flights.to.seatac$time_gained_air)
+mean(flights.to.seatac$time_gained_air, na.rm = TRUE)
+#Lose time
 ### Bonus ###
 # Write a function that allows you to specify an origin, a destination, and a column of interest
 # that returns a data.frame of flights from the origin to the destination and only the column of interest
-## Hint: see slides on standard evaluation
-
+## Hint: see chapter 11 section on standard evaluation
+NewFunction = function(set.origin, set.destination, column) {
+  return(filter(flights, set.origin == origin) %>% filter(set.destination == dest) %>% select_(column))
+}
 
 # Retireve the air_time column for flights from JFK to SEA
-
+air.time <- NewFunction("JFK", "SEA", "air_time")
 
 # What was the average air time of those flights (in hours)?  
-
+mean(air.time$air_time, na.rm = TRUE) / 60
 
 # What was the min/max average air time for the JFK to SEA flights?
+min(air.time$air_time, na.rm = TRUE)
+max(air.time$air_time, na.rm = TRUE)
